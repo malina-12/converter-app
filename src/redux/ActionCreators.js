@@ -1,9 +1,9 @@
-export const saveCustomeExchange = (payload) => ({
+export const saveCustomExchange = (payload) => ({
   type: "SAVE_CUSTOM_EXCHANGE_RATE",
   payload,
 });
 
-export const handleCustomeExchangeInput = (payload) => ({
+export const handleCustomExchangeInput = (payload) => ({
   type: "HANDLE_CUSTOM_EXCHANGE_RATE",
   payload,
 });

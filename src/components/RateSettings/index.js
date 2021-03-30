@@ -2,33 +2,36 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
-  saveCustomeExchange,
-  handleCustomeExchangeInput,
-} from "../../redux/ActionCreators";
-import { valueValidator } from '../../utils';
-import {
   Button,
   Checkbox,
   FormControlLabel,
   FormGroup,
   TextField,
 } from "@material-ui/core";
+import {
+  saveCustomExchange,
+  handleCustomExchangeInput,
+} from "../../redux/ActionCreators";
+import { numberValidator } from '../../utils';
+
 
 import "./styles.css";
 
 const RateSettings = () => {
   const dispatch = useDispatch();
-  const customExchangeRate = useSelector((state) => state.customExchangeRate);
-  const isCustomSet = useSelector((state) => state.isCustomSet);
+  const {customExchangeRate, isCustomSet} = useSelector((state) => state);
 
   const handleSelectRate = (e) => {
-    dispatch(handleCustomeExchangeInput(e.target.checked));
+    dispatch(handleCustomExchangeInput(e.target.checked));
   };
 
   const handleEnterRate = (e) => {
     const currentValue = e.target.value;
-    if (valueValidator(currentValue)) {
-      dispatch(saveCustomeExchange(String(e.target.value)));
+    if (numberValidator(currentValue)) {
+      dispatch(saveCustomExchange(String(e.target.value)));
+    }
+    if (!currentValue.length) {
+      dispatch(saveCustomExchange(''))
     }
   };
 

@@ -1,25 +1,20 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Button, FormGroup, TextField } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import {
   handleConvertationInput,
   setConvertTo,
   getResult,
   getDefaultCurrency,
 } from "../../redux/ActionCreators";
-import { valueValidator } from '../../utils';
-import { Button, FormGroup, TextField } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { numberValidator } from '../../utils';
 
 import "./styles.css";
 
 const Converter = () => {
   const dispatch = useDispatch();
-  const selectedCurrency = useSelector((state) => state.selectedCurrency);
-  const defaultCurrency = useSelector((state) => state.defaultCurrency);
-  const convertationInput = useSelector((state) => state.convertationInput);
-  const result = useSelector((state) => state.result);
-  const customExchangeRate = useSelector((state) => state.customExchangeRate);
-  const isCustomSet = useSelector((state) => state.isCustomSet);
+  const {customExchangeRate, convertationInput, selectedCurrency, defaultCurrency, isCustomSet, result} = useSelector((state) => state);
 
   const convertCurrency = () => {
     if (convertationInput && selectedCurrency) {
@@ -30,7 +25,7 @@ const Converter = () => {
 
   const handleEnterRate = (e) => {
     const currentValue = e.target.value;
-    if (valueValidator(currentValue)) {
+    if (numberValidator(currentValue)) {
       dispatch(handleConvertationInput(e.target.value));
     }
   };
@@ -64,7 +59,7 @@ const Converter = () => {
   return (
     <div className="container">
       <div className="form">
-        <h2 className="form-header">Currency converter</h2>
+        <h2 className="form-header">{isCustomSet ? 'Currency converter' : 'Currency converter to USD'}</h2>
         <FormGroup row>
           <TextField
             label="UAH"
@@ -74,9 +69,10 @@ const Converter = () => {
           />
         </FormGroup>
 
-        {convertationInput && result && (
-          <div className="result">{`${result}` }</div>
-        )}
+          <div className="result">
+            {convertationInput && result && `${result}`}
+            {convertationInput && result && !isCustomSet && ' USD'}
+          </div>
       </div>
 
       <Link to="/settings">
