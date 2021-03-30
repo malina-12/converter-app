@@ -1,0 +1,7 @@
+.layout {
+  background-color: #e2f0fd;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+}
