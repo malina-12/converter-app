@@ -1,27 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
-import CurrencyReducer from "./redux/СurrencyReducer";
-import "./index.css";
-import App from "./App";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import App from "./App";
 import Converter from "./components/Converter";
 import RateSettings from "./components/RateSettings";
+import { STORE } from './components/consts';
+import { HOMEPAGE, SETTINGS } from './components/consts'
 
-const store = createStore(
-  CurrencyReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+import "./index.css";
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={STORE}>
     <Router>
       <App>
         <Router>
           <Switch>
-            <Route exact path="/" component={Converter} />
-            <Route path="/settings" component={RateSettings} />
+            <Route exact path={HOMEPAGE} component={Converter} />
+            <Route path={SETTINGS} component={RateSettings} />
           </Switch>
         </Router>
       </App>

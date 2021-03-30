@@ -7,7 +7,7 @@ const initialState = {
   result: null,
 };
 
-const cardsReducer = (state = initialState, action) => {
+const currencyReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SAVE_CUSTOM_EXCHANGE_RATE":
       return { ...state, customExchangeRate: action.payload };
@@ -32,4 +32,4 @@ const cardsReducer = (state = initialState, action) => {
   }
 };
 
-export default cardsReducer;
+export default currencyReducer;

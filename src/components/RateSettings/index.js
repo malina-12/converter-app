@@ -1,9 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  saveCustomeExchange,
-  handleCustomeExchangeInput,
-} from "../../redux/ActionCreators";
+import { Link } from "react-router-dom";
 import {
   Button,
   Checkbox,
@@ -11,37 +8,40 @@ import {
   FormGroup,
   TextField,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import {
+  saveCustomExchange,
+  handleCustomExchangeInput,
+} from "../../redux/ActionCreators";
+import { numberValidator } from '../../utils';
+
+
+import "./styles.css";
 
 const RateSettings = () => {
   const dispatch = useDispatch();
-  const customExchangeRate = useSelector((state) => state.customExchangeRate);
-  const isCustomSet = useSelector((state) => state.isCustomSet);
-
-  const valueValidator = (val) => {
-    const numberValue = Number(val);
-    const isNumber = !isNaN(numberValue);
-    const isNumberFinite = isFinite(numberValue);
-    return isNumber && isNumberFinite;
-  };
+  const {customExchangeRate, isCustomSet} = useSelector((state) => state);
 
   const handleSelectRate = (e) => {
-    dispatch(handleCustomeExchangeInput(e.target.checked));
+    dispatch(handleCustomExchangeInput(e.target.checked));
   };
 
   const handleEnterRate = (e) => {
     const currentValue = e.target.value;
-    if (valueValidator(currentValue)) {
-      dispatch(saveCustomeExchange(String(e.target.value)));
+    if (numberValidator(currentValue)) {
+      dispatch(saveCustomExchange(String(e.target.value)));
+    }
+    if (!currentValue.length) {
+      dispatch(saveCustomExchange(''))
     }
   };
 
   return (
-    <>
-      <FormGroup row className="container">
+    <div className='container'>
+      <FormGroup row>
         <FormControlLabel
           control={
             <Checkbox
+            className=''
               checked={isCustomSet}
               onChange={handleSelectRate}
               color="primary"
@@ -63,7 +63,7 @@ const RateSettings = () => {
           Go to converter page
         </Button>
       </Link>
-    </>
+    </div>
   );
 };
 
