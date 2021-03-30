@@ -8,9 +8,8 @@ import {
 } from "../../redux/ActionCreators";
 import { Button, FormGroup, TextField } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import Layout from "../Layout";
 
-import './styles.css'
+import "./styles.css";
 
 const Converter = () => {
   const dispatch = useDispatch();
@@ -30,10 +29,8 @@ const Converter = () => {
 
   const convertCurrency = () => {
     if (convertationInput && selectedCurrency) {
-    console.log(`convertationInput`, convertationInput);
-    console.log(`selectedCurrency`, selectedCurrency);
-    const result = Number(convertationInput) / Number(selectedCurrency);
-    dispatch(getResult((result)));
+      const result = Number(convertationInput) / Number(selectedCurrency);
+      dispatch(getResult(result));
     }
   };
 
@@ -50,15 +47,14 @@ const Converter = () => {
     const response = await fetch(url);
     const currency = await response.json();
     const USDCurrency = currency.filter((el) => el.ccy === "USD")[0]?.sale;
-    console.log(`USDCurrency`, USDCurrency);
     if (USDCurrency.length) {
       dispatch(getDefaultCurrency(USDCurrency));
+      dispatch(setConvertTo(USDCurrency));
     }
   };
 
   useEffect(() => {
     getCurrency();
-    dispatch(setConvertTo(defaultCurrency));
   }, []);
 
   useEffect(() => {
@@ -72,29 +68,29 @@ const Converter = () => {
   }, [customExchangeRate, dispatch, isCustomSet, convertationInput]);
 
   return (
-      <div className="container">
-        <div className="form">
-          <h2 className="form-header">Currency converter</h2>
-          <FormGroup row>
-            <TextField
-              label="UAH"
-              variant="outlined"
-              value={convertationInput}
-              onChange={handleEnterRate}
-            />
-          </FormGroup>
+    <div className="container">
+      <div className="form">
+        <h2 className="form-header">Currency converter</h2>
+        <FormGroup row>
+          <TextField
+            label="UAH"
+            variant="outlined"
+            value={convertationInput}
+            onChange={handleEnterRate}
+          />
+        </FormGroup>
 
-          {convertationInput && result && (
-            <div className="result">{`${result}`}</div>
-          )}
-        </div>
-
-        <Link to="/settings">
-          <Button variant="outlined" color="primary">
-            Go to settings page
-          </Button>
-        </Link>
+        {convertationInput && result && (
+          <div className="result">{`${result}`}</div>
+        )}
       </div>
+
+      <Link to="/settings">
+        <Button variant="outlined" color="primary">
+          Go to settings page
+        </Button>
+      </Link>
+    </div>
   );
 };
 
