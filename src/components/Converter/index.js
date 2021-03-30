@@ -6,6 +6,7 @@ import {
   getResult,
   getDefaultCurrency,
 } from "../../redux/ActionCreators";
+import { valueValidator } from '../../utils';
 import { Button, FormGroup, TextField } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
@@ -19,13 +20,6 @@ const Converter = () => {
   const result = useSelector((state) => state.result);
   const customExchangeRate = useSelector((state) => state.customExchangeRate);
   const isCustomSet = useSelector((state) => state.isCustomSet);
-
-  const valueValidator = (value) => {
-    const numberValue = Number(value);
-    const isNumber = !isNaN(numberValue);
-    const isNumberFinite = isFinite(numberValue);
-    return isNumber && isNumberFinite;
-  };
 
   const convertCurrency = () => {
     if (convertationInput && selectedCurrency) {
@@ -81,7 +75,7 @@ const Converter = () => {
         </FormGroup>
 
         {convertationInput && result && (
-          <div className="result">{`${result}`}</div>
+          <div className="result">{`${result}` }</div>
         )}
       </div>
 

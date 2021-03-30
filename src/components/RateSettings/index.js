@@ -1,9 +1,11 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   saveCustomeExchange,
   handleCustomeExchangeInput,
 } from "../../redux/ActionCreators";
+import { valueValidator } from '../../utils';
 import {
   Button,
   Checkbox,
@@ -11,19 +13,13 @@ import {
   FormGroup,
   TextField,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
+
+import "./styles.css";
 
 const RateSettings = () => {
   const dispatch = useDispatch();
   const customExchangeRate = useSelector((state) => state.customExchangeRate);
   const isCustomSet = useSelector((state) => state.isCustomSet);
-
-  const valueValidator = (val) => {
-    const numberValue = Number(val);
-    const isNumber = !isNaN(numberValue);
-    const isNumberFinite = isFinite(numberValue);
-    return isNumber && isNumberFinite;
-  };
 
   const handleSelectRate = (e) => {
     dispatch(handleCustomeExchangeInput(e.target.checked));
@@ -37,11 +33,12 @@ const RateSettings = () => {
   };
 
   return (
-    <>
-      <FormGroup row className="container">
+    <div className='container'>
+      <FormGroup row>
         <FormControlLabel
           control={
             <Checkbox
+            className=''
               checked={isCustomSet}
               onChange={handleSelectRate}
               color="primary"
@@ -63,7 +60,7 @@ const RateSettings = () => {
           Go to converter page
         </Button>
       </Link>
-    </>
+    </div>
   );
 };
 
